@@ -381,6 +381,38 @@ if test "$enable_kerberos" != "no"; then
 fi
 AM_CONDITIONAL(BUILD_KERBEROS, [test x$enable_kerberos != xno])
 
+# LastFM
+AC_DEFINE(GOA_LASTFM_NAME, ["lastfm"], [ProviderType and extension point name])
+AC_ARG_ENABLE([lastfm], [AS_HELP_STRING([--enable-lastfm],
+                                        [Enable LastFM provider])],
+                                        [],
+                                        [enable_lastfm=yes])
+AC_ARG_WITH(lastfm-client-id,
+            [AS_HELP_STRING([--with-lastfm-client-id],
+                            [LastFm client id])],
+                            [],
+                            [])
+AC_ARG_WITH(lastfm-client-secret,
+            [AS_HELP_STRING([--with-lastfm-client-secret],
+                            [LastFM client secret])],
+                            [],
+                            [])
+if test "$with_lastfm_client_id" = ""; then
+  with_lastfm_client_id="7a2461fe34c9c8124fb28ac750ba12fa"
+fi
+if test "$with_lastfm_client_secret" = ""; then
+  with_lastfm_client_secret="49ec391644459c417f3afe57ca246c5a"
+fi
+AC_DEFINE_UNQUOTED(GOA_LASTFM_CLIENT_ID,
+                   ["$with_lastfm_client_id"],
+                   [LastFM client id])
+AC_DEFINE_UNQUOTED(GOA_LASTFM_CLIENT_SECRET,
+                   ["$with_lastfm_client_secret"],
+                   [LastFM client secret])
+if test "$enable_lastfm" != "no"; then
+  AC_DEFINE(GOA_LASTFM_ENABLED, 1, [Enable LastFM data provider])
+fi
+
 # Optional timerfd support
 AC_MSG_CHECKING([for timerfd support])
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([
@@ -541,6 +573,7 @@ echo "
 	Windows Live provider:          ${enable_windows_live} (OAuth 2.0, id:${with_windows_live_client_id})
         Telepathy provider:             ${enable_telepathy}
         Pocket provider:                ${enable_pocket} (id:${with_pocket_client_id})
+	LastFM provider                 ${enable_lastfm} (id:${with_lastfm_client_id} secret:${with_lastfm_client_secret})
 
 	Maintainer mode:                ${USE_MAINTAINER_MODE}
 	Building api docs:              ${enable_gtk_doc}

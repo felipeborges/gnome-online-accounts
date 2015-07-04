@@ -15,7 +15,7 @@ AM_CPPFLAGS = 							\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
-noinst_PROGRAMS = list-providers list-accounts add-pocket
+noinst_PROGRAMS = list-providers list-accounts add-pocket lastfm-shout
 
 list_providers_SOURCES = list-providers.c
 list_providers_CFLAGS = $(GLIB_CFLAGS) $(GTK_CFLAGS)
@@ -28,6 +28,10 @@ list_accounts_LDADD = $(GLIB_LIBS) ../goa/libgoa-1.0.la
 add_pocket_SOURCES = add-pocket.c
 add_pocket_CFLAGS = $(GLIB_CFLAGS) $(REST_CFLAGS)
 add_pocket_LDADD = $(GLIB_LIBS) $(REST_LIBS) ../goa/libgoa-1.0.la
+
+lastfm_shout_SOURCES = lastfm-shout.c
+lastfm_shout_CFLAGS = $(GLIB_CFLAGS) $(REST_CFLAGS)
+lastfm_shout_LDADD = $(GLIB_LIBS) $(REST_LIBS) ../goa/libgoa-1.0.la
 
 clean-local :
 	rm -f *~
